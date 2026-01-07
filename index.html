@@ -1,73 +1,42 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>今日分享</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily</title>
   <style>
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif;background:#fff;color:#111}
-    header{padding:14px 16px 10px 16px;font-size:16px;font-weight:600}
-    .sub{padding:0 16px 10px 16px;font-size:13px;color:#555}
-    .wrap{display:flex;justify-content:center;align-items:flex-start;padding:0 10px 18px 10px}
-    img{max-width:100%;height:auto;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;padding:0 16px 18px 16px}
-    button,a.btn{appearance:none;border:1px solid #ddd;background:#fafafa;border-radius:10px;padding:10px 12px;font-size:14px;color:#111;text-decoration:none}
-    button:active,a.btn:active{transform:translateY(1px)}
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <header>今日分享</header>
-  <div class="sub" id="dayLabel">加载中…</div>
-  <div class="wrap">
-    <img id="img" alt="每日分享" />
-  </div>
-  <div class="actions">
-    <button id="nextBtn">下一页（刷新也会自动下一页）</button>
-    <button id="resetBtn">从第1页重新开始</button>
-    <a class="btn" id="permalink" href="#">固定到今天这一页</a>
-  </div>
+
+< img id="dailyImage" src="" alt="">
 
 <script>
-(function(){
-  const TOTAL = 59; // 本PDF共59页（每页一天）
-  const KEY = "demo_day_counter_v1";
-  const params = new URLSearchParams(location.search);
-  let forced = params.get("day"); // e.g. 001
-  let day;
+  const TOTAL = 59; // 你现在这个 PDF 的总页数
+  const KEY = "daily_page_index";
 
-  function clampDay(n){
-    n = parseInt(n,10);
-    if(!Number.isFinite(n) || n<1) return 1;
-    if(n>TOTAL) return TOTAL;
-    return n;
-  }
+  let index = parseInt(localStorage.getItem(KEY) || "1", 10);
 
-  if(forced){
-    day = clampDay(forced);
-  } else {
-    const prev = clampDay(localStorage.getItem(KEY) || 0);
-    day = prev + 1;
-    if(day > TOTAL) day = 1;
-    localStorage.setItem(KEY, String(day));
-  }
+  document.getElementById("dailyImage").src =
+    "images/" + String(index).padStart(3, "0") + ".jpg";
 
-  const img = document.getElementById("img");
-  img.src = `img/day${String(day).padStart(3,"0")}.webp`;
-  document.getElementById("dayLabel").textContent = `第 ${day} / ${TOTAL} 页`;
-
-  const permalink = document.getElementById("permalink");
-  permalink.href = `${location.pathname}?day=${String(day).padStart(3,"0")}`;
-
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    // simulate "refresh" next
-    location.href = location.pathname; 
-  });
-
-  document.getElementById("resetBtn").addEventListener("click", () => {
-    localStorage.setItem(KEY, "0");
-    location.href = location.pathname;
-  });
-})();
+  index++;
+  if (index > TOTAL) index = 1;
+  localStorage.setItem(KEY, index);
 </script>
+
 </body>
 </html>
