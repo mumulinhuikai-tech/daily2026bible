@@ -5,19 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daily</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+    html, body { margin:0; padding:0; width:100%; height:100%; background:#fff; }
+    img { width:100%; height:100%; object-fit:contain; display:block; }
   </style>
 </head>
 <body>
@@ -25,13 +14,13 @@
 <img id="img" src="" alt="">
 
 <script>
-  const TOTAL = 59;          // 当前页数
+  const TOTAL = 59;         // 改成你的实际总数
   const KEY = "daily_index";
 
   let index = parseInt(localStorage.getItem(KEY) || "1", 10);
 
-  document.getElementById("img").src =
-    "img/" + String(index).padStart(3, "0") + ".jpg";
+  const filename = "day" + String(index).padStart(3, "0") + ".webp";
+  document.getElementById("img").src = "img/" + filename; // 如果这些 day001.webp 就在根目录，把 "img/" 去掉
 
   index++;
   if (index > TOTAL) index = 1;
