@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daily</title>
   <style>
-    html, body { margin:0; padding:0; width:100%; height:100%; background:#fff; }
-    img { width:100%; height:100%; object-fit:contain; display:block; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -14,15 +25,16 @@
 <img id="img" src="" alt="">
 
 <script>
-  const TOTAL = 59;           // 你这份的总页数
+  const TOTAL = 59;          // 当前页数
   const KEY = "daily_index";
 
   let index = parseInt(localStorage.getItem(KEY) || "1", 10);
 
   document.getElementById("img").src =
-    "images/" + String(index).padStart(3, "0") + ".jpg";
+    "img/" + String(index).padStart(3, "0") + ".jpg";
 
-  index = (index >= TOTAL) ? 1 : (index + 1);
+  index++;
+  if (index > TOTAL) index = 1;
   localStorage.setItem(KEY, index);
 </script>
 
