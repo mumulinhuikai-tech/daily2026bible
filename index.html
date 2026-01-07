@@ -1,40 +1,28 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daily</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
+    html, body { margin:0; padding:0; width:100%; height:100%; background:#fff; }
+    img { width:100%; height:100%; object-fit:contain; display:block; }
   </style>
 </head>
 <body>
 
-< img id="dailyImage" src="" alt="">
+<img id="img" src="" alt="">
 
 <script>
-  const TOTAL = 59; // 你现在这个 PDF 的总页数
-  const KEY = "daily_page_index";
+  const TOTAL = 59;           // 你这份的总页数
+  const KEY = "daily_index";
 
   let index = parseInt(localStorage.getItem(KEY) || "1", 10);
 
-  document.getElementById("dailyImage").src =
+  document.getElementById("img").src =
     "images/" + String(index).padStart(3, "0") + ".jpg";
 
-  index++;
-  if (index > TOTAL) index = 1;
+  index = (index >= TOTAL) ? 1 : (index + 1);
   localStorage.setItem(KEY, index);
 </script>
 
